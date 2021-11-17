@@ -1,0 +1,50 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.SearchPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IPublishedContentQuery _publishedContentQuery
+
+@{
+    Layout = "Master.cshtml";
+}
+
+<link rel="stylesheet" href="/CSS/search.css">
+
+@*HidePageFromNavigation Navigation Page Setting*@
+
+@{
+    var searchQuery = HttpContextAccessor.HttpContext.Request.Query["q"];
+}
+
+<div class="search-result ">
+
+    @{
+        var searchResults = _publishedContentQuery.Search(searchQuery);
+
+    }
+
+    <div>@searchResults.Count() träffar på @searchQuery</div>
+
+    @foreach (var result in searchResults)
+    {
+
+        var searchImageUrl = result.Content.Value<IPublishedContent>("productImage").Url();
+<a href="@result.Content.Url()">
+    <div class="search-container">
+        <div>
+            <img class="main-img" src="@searchImageUrl" width="100" height="100" />
+        </div>
+        <div class="name-and-description">
+            <span class="title">@result.Content.Name</span>
+            <p class="short-description">
+                @result.Content.Value("productDescription")
+            </p>
+        </div>
+        </div>
+</a>
+}
+
+
+    </div>

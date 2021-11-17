@@ -1,0 +1,53 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.StartPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core;
+@{
+    Layout = "Master.cshtml";
+}
+
+<!-- -------------------------------------------------------------- -->
+<!--                           hero                                 -->
+<!-- -------------------------------------------------------------- -->
+
+<article class="hero-container">
+  @await Html.PartialAsync("Components/Hero")
+</article>
+<!-- -------------------------------------------------------------- -->
+<!--                           spots                                -->
+<!-- -------------------------------------------------------------- -->
+
+
+<div class="spots-container">
+@await Html.PartialAsync("Components/Spots")
+</div>
+
+<!-- -------------------------------------------------------------- -->
+<!--                           Product grid                         -->
+<!-- -------------------------------------------------------------- -->
+
+@{
+    var content = Model.Value<IPublishedContent>("ourProductsProducts");
+}
+<main>
+    <h1 class="our-product-heading">@Model.Value("ourProductHeading")</h1>
+    <div class="product-container">
+        @foreach (var product in content.Children)
+        {
+            var imageUrl = product.Value<IPublishedContent>("productImage").Url();
+            var Price = product.Value("ProductPrice");
+
+            <article class="v-container">
+
+                <a href="@product.Url()">
+                    <img class="main-img" src="@imageUrl" width="200" height="200">
+                </a>
+                <div class="product-text-container flex-direction-row">
+                    <h4>@product.Name </h4> <h4>@Price kr</h4>
+                </div>
+            </article>
+        }
+
+    </div>
+</main>
+

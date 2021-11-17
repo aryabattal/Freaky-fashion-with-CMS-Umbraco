@@ -1,0 +1,62 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.ProductDetailsPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "Master.cshtml";
+}
+
+@{
+    var image = Model.Value<IPublishedContent>("productImage");
+
+}
+
+    <h3 class="product-name">@Model.Value("productName")</h3>
+
+<div class="header-container main-content justify-content-center align-items-to-flex-start">
+    <div class="v-container product-shots-container">
+        <div class="product-shots">
+            <img src="@image.Url()"
+                 alt="product-shot" />
+        </div>
+        <div class="product-shots">
+            <img src="@image.Url()"
+                 alt="product-shot" />
+        </div>
+        <div class="product-shots">
+            <img src="@image.Url()"
+                 alt="product-shot" />
+        </div>
+    </div>
+
+    <div class="v-container main-product-shot-container">
+        <div class="main-product-shot">
+            <img src="@image.Url()"
+                 alt="" />
+        </div>
+    </div>
+    <div class="v-container order-instructions-container">
+        <h5 class="instruction-title"></h5>
+        <p class="instructions">
+            @Model.Value("productDescription")
+        </p>
+        <div class="v-container parameters-container">
+            <div>
+                <label for="cake-size">Size:</label>
+                <select name="cake-size" id="cake-size">
+                    <option value="Mini">Small</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Big">Larg</option>
+                    <option value="Enormous">X-Larg</option>
+                </select>
+            </div>
+
+
+            <div class="purchase-button-container">
+                <button class="purchase-button"
+                        onclick="alert('Product are on their way!')">
+                    Add To Cart <i class="material-icons">shopping_cart</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

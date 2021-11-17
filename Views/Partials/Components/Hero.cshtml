@@ -1,0 +1,23 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.StartPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+
+
+@{
+    var image = Model.HeroImage;
+    var button2 = Model.HeroButton;
+}
+<div class="v-container">
+    <article>
+        <h3>@Model.HeroHeading </h3>
+        <p>
+            @Model.HeroDescripsion
+        </p>
+
+        <a class="" href="@button2.Url">
+            <input type="submit" value="@button2.Name" class="submit-btn" />
+        </a>
+    </article>
+</div>
+<div class="v-container align-items-central ">
+    <img src="@image.Url()" alt="hero image" width="700" height="300">
+</div>

@@ -1,0 +1,29 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Models
+
+
+@{
+    var SpotsContentEnumrable = Model.Value<IEnumerable<IPublishedElement>>("Spots");
+
+}
+
+    @foreach (var SpotsContent in SpotsContentEnumrable)
+
+    {
+        var spotsimageUrl = SpotsContent.Value<IPublishedContent>("spotsImage").Url();
+
+        var spotsLink = SpotsContent.Value<Link>("spotsLink");
+
+       
+    <a class="spots-img" href="@spotsLink.Url">
+        <div class="image-container">
+            <img class="spots-img" src="@spotsimageUrl" width="370" height="1000">
+            <p class="spots-title"> @SpotsContent.Value("spotsLabel")</p>
+
+        </div>
+
+    </a>
+
+         
+    }
+

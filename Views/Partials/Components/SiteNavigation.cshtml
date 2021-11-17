@@ -1,0 +1,69 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Routing
+@using Umbraco.Extensions
+
+@inject IPublishedValueFallback PublishedValueFallback
+@inject IPublishedUrlProvider PublishedUrlProvider
+@*
+    This snippet displays a list of links of the pages immediately under the top-most page in the content tree.
+    This is the home page for a standard website.
+    It also highlights the current active page/section in the navigation with the CSS class "current".
+*@
+
+@{ var selection = Model.Root().Children.Where(x => x.IsVisible(PublishedValueFallback)).ToArray(); }
+
+@{
+    var content = Model.Value<IPublishedContent>("startPage");
+}
+
+<ul class="nav-container">
+  
+        <li> <a href="">Hem</a></li>
+
+        @foreach (var item in selection)
+        {
+            if (item.Children.Any())
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @item.Name
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        @foreach (var product in item.Children)
+                        {
+                            <li>
+                                <a class="dropdown-item" href="@product.Url(PublishedUrlProvider)">
+                                    @product.Name
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a href="@item.Url(PublishedUrlProvider)"
+                       class="nav-link @(item.IsAncestorOrSelf(Model) ? "active" : null)"
+                       aria-current="page">
+                        @item.Name
+                    </a>
+                </li>
+            }
+
+        }
+    </ul>
+@*<ul>
+        <li> <a href="nyheter.html">Nyheter</a></li>
+        <li><a href="Kategorier.html">Kategorier</a></li>
+        <li><a href="Topplistan.html">Topplistan</a></li>
+        <li><a href="rea.html">Rea</a></li>
+        <li><a href="kompanjer.html">kompanjer</a></li>
+        <li><a href="Varumärken.html">Varumärken</a></li>
+        <li><a href="shop-instgram.html">Shop Instagram</a></li>
+    </ul>*@
+

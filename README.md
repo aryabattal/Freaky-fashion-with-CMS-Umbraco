@@ -1,0 +1,1 @@
+# Freaky Fashion web application with CMS
